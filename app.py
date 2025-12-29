@@ -3,7 +3,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 # --- 1. CONFIGURATION & STYLING ---
-st.set_page_config(page_title="Calculus Assignment: Gradient & Differentials", layout="wide")
+st.set_page_config(page_title="Calculus Assignment", layout="wide")
 
 # Custom CSS for the "Nicer" Dashboard look
 st.markdown("""
@@ -45,6 +45,13 @@ st.sidebar.write("**Step size for estimation:**")
 dx_val = st.sidebar.slider("Change in x (dx)", -0.5, 0.5, 0.1, 0.01)
 dy_val = st.sidebar.slider("Change in y (dy)", -0.5, 0.5, 0.1, 0.01)
 
+# --- NEW: TEAM NAMES ---
+st.sidebar.markdown("---")
+st.sidebar.subheader("Project Team")
+st.sidebar.write("1. **CHU TUCK ZHANG**")
+st.sidebar.write("2. **JOEY LEE XIN PEI**")
+st.sidebar.write("3. **LEI AI QIN**")
+
 # --- 3. MATHEMATICAL CALCULATIONS ---
 # Generate grid for 3D Surface
 x_range = np.linspace(-2.5, 2.5, 50)
@@ -55,10 +62,7 @@ if example_choice == "Simple: Inverted Paraboloid":
     # z = 4 - x^2 - y^2
     Z = 4 - X ** 2 - Y ** 2
 
-
-    def get_z(x, y):
-        return 4 - x ** 2 - y ** 2
-
+    def get_z(x, y): return 4 - x ** 2 - y ** 2
 
     # Partial Derivatives
     # dz/dx = -2x, dz/dy = -2y
@@ -69,17 +73,14 @@ else:
     # z = sin(2x) + cos(2y)
     Z = np.sin(X * 2) + np.cos(Y * 2)
 
-
-    def get_z(x, y):
-        return np.sin(x * 2) + np.cos(y * 2)
-
+    def get_z(x, y): return np.sin(x * 2) + np.cos(y * 2)
 
     # Partial Derivatives
     dx = 2 * np.cos(x_val * 2)
     dy = -2 * np.sin(y_val * 2)
 
 # Calculate Points
-current_z = get_z(x_val, y_val)  # Red Dot
+current_z = get_z(x_val, y_val) # Red Dot
 
 # Topic 5 Calculations
 # A. Linear Approximation (dz)
@@ -131,7 +132,7 @@ with col2:
     # === SECTION 1: GRADIENT ===
     st.markdown('<div class="section-header">1. Gradient (Steepest Ascent)</div>', unsafe_allow_html=True)
     st.latex(r"\nabla f = \langle f_x, f_y \rangle")
-
+    
     # Nested columns for Partials
     g_col1, g_col2 = st.columns(2)
     with g_col1:
@@ -140,17 +141,16 @@ with col2:
     with g_col2:
         st.markdown('<div class="metric-label">Partial Y (Slope in y)</div>', unsafe_allow_html=True)
         st.code(f"{dy:.4f}")
-
+    
     # Steepness
     st.markdown('<div class="metric-label">Steepness (Magnitude)</div>', unsafe_allow_html=True)
-    st.code(f"{np.sqrt(dx ** 2 + dy ** 2):.4f}")
-
+    st.code(f"{np.sqrt(dx**2 + dy**2):.4f}")
+    
     st.info("💡 **Visual Guide:** The **Orange Arrow** uses these values to point uphill (Steepest Ascent).")
 
     # === SECTION 2: DIFFERENTIALS ===
     st.markdown('<div class="section-header">2. Differentials (Approximation)</div>', unsafe_allow_html=True)
-
-    # REPLACED TEXT WITH FORMULA:
+    
     st.latex(r"dz = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy")
 
     # Nested columns for Comparison
@@ -164,14 +164,14 @@ with col2:
 
     # The Green Dot Tip (Requested Feature)
     st.info("""
-    💡 **Visual Guide:** The **Green Dot** shows where you land on the *actual* curved surface.
+    **Visual Guide:** The **Green Dot** shows where you land on the *actual* curved surface.
     Compare its height to the **Red Dot** to see the Actual Change ($\Delta z$).
     """)
 
     # Accuracy Visualization
     difference = abs(total_differential_dz - actual_change_delta_z)
     st.markdown('<div class="metric-label">Approximation Error</div>', unsafe_allow_html=True)
-
+    
     # Health Bar Logic
     accuracy_score = max(0, 1.0 - difference)
     if difference < 0.1:
@@ -199,4 +199,7 @@ The orange gradient vector always points in the direction of steepest ascent.
 
 ### 3. Sensitivity Analysis (Finance)
 Financial analysts use partial derivatives (displayed in the dashboard) to determine which variables (e.g., Interest Rates vs. Oil Prices) have the largest impact on a portfolio's value, allowing for better risk management.
+""")
+Financial analysts use partial derivatives (displayed in the dashboard) to determine which variables (e.g., Interest Rates vs. Oil Prices) have the largest impact on a portfolio's value, allowing for better risk management.
+
 """)
