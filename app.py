@@ -45,7 +45,7 @@ st.sidebar.write("**Step size for estimation:**")
 dx_val = st.sidebar.slider("Change in x (dx)", -0.5, 0.5, 0.1, 0.01)
 dy_val = st.sidebar.slider("Change in y (dy)", -0.5, 0.5, 0.1, 0.01)
 
-# --- NEW: TEAM NAMES ---
+# --- TEAM NAMES ---
 st.sidebar.markdown("---")
 st.sidebar.subheader("Project Team")
 st.sidebar.write("1. **CHU TUCK ZHANG**")
@@ -123,83 +123,4 @@ fig.update_layout(title=f"3D Visualization: {example_choice}", height=600, margi
 # --- 5. MAIN DASHBOARD ---
 st.title("Calculus Explorer: Gradient & Differentials")
 
-col1, col2 = st.columns([3, 1])
-
-with col1:
-    st.plotly_chart(fig, use_container_width=True)
-
-with col2:
-    # === SECTION 1: GRADIENT ===
-    st.markdown('<div class="section-header">1. Gradient (Steepest Ascent)</div>', unsafe_allow_html=True)
-    st.latex(r"\nabla f = \langle f_x, f_y \rangle")
-    
-    # Nested columns for Partials
-    g_col1, g_col2 = st.columns(2)
-    with g_col1:
-        st.markdown('<div class="metric-label">Partial X (Slope in x)</div>', unsafe_allow_html=True)
-        st.code(f"{dx:.4f}")
-    with g_col2:
-        st.markdown('<div class="metric-label">Partial Y (Slope in y)</div>', unsafe_allow_html=True)
-        st.code(f"{dy:.4f}")
-    
-    # Steepness
-    st.markdown('<div class="metric-label">Steepness (Magnitude)</div>', unsafe_allow_html=True)
-    st.code(f"{np.sqrt(dx**2 + dy**2):.4f}")
-    
-    st.info("💡 **Visual Guide:** The **Orange Arrow** uses these values to point uphill (Steepest Ascent).")
-
-    # === SECTION 2: DIFFERENTIALS ===
-    st.markdown('<div class="section-header">2. Differentials (Approximation)</div>', unsafe_allow_html=True)
-    
-    st.latex(r"dz = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy")
-
-    # Nested columns for Comparison
-    d_col1, d_col2 = st.columns(2)
-    with d_col1:
-        st.markdown('<div class="metric-label">Estimate (dz)</div>', unsafe_allow_html=True)
-        st.code(f"{total_differential_dz:.4f}")
-    with d_col2:
-        st.markdown('<div class="metric-label">Actual (Δz)</div>', unsafe_allow_html=True)
-        st.code(f"{actual_change_delta_z:.4f}")
-
-    # The Green Dot Tip (Requested Feature)
-    st.info("""
-    **Visual Guide:** The **Green Dot** shows where you land on the *actual* curved surface.
-    Compare its height to the **Red Dot** to see the Actual Change ($\Delta z$).
-    """)
-
-    # Accuracy Visualization
-    difference = abs(total_differential_dz - actual_change_delta_z)
-    st.markdown('<div class="metric-label">Approximation Error</div>', unsafe_allow_html=True)
-    
-    # Health Bar Logic
-    accuracy_score = max(0, 1.0 - difference)
-    if difference < 0.1:
-        msg = "Excellent Approximation"
-        st.progress(accuracy_score)
-        st.caption(f"**{msg}** (Error: {difference:.4f})")
-    else:
-        st.progress(accuracy_score)
-        st.warning(f"High Error: {difference:.4f}")
-        st.caption("Step size is too large for linear approximation.")
-
-# --- 6. REAL WORLD APPLICATION & FEATURE EXPLANATION ---
-st.divider()
-st.subheader("Real World Significance & Feature Analysis")
-
-st.markdown("""
-### 1. The "New Point" Feature: Engineering Tolerance
-To facilitate error analysis, this application visualizes the post-displacement coordinate $f(x+dx, y+dy)$ as a distinct **Green Marker**. 
-* **Formal Explanation:** This feature enables a direct comparative analysis between the linear approximation provided by the total differential ($dz$) and the true non-linear behavior of the surface ($\Delta z$).
-* **Real World Use:** In manufacturing, this concept is used for **Tolerance Analysis**. If a machine cuts a part with a tiny error ($dx$), engineers use the Differential ($dz$) to predict how much that tiny error will propagate to the final product's volume or strength, ensuring safety margins are met.
-
-### 2. The Gradient Feature: Optimization & AI
-The orange gradient vector always points in the direction of steepest ascent.
-* **Real World Use:** This is the visual representation of **Gradient Descent**, the algorithm used to train Artificial Intelligence models. AI models calculate this vector to find the "path of steepest descent" to minimize their error rates and learn from data.
-
-### 3. Sensitivity Analysis (Finance)
-Financial analysts use partial derivatives (displayed in the dashboard) to determine which variables (e.g., Interest Rates vs. Oil Prices) have the largest impact on a portfolio's value, allowing for better risk management.
-""")
-Financial analysts use partial derivatives (displayed in the dashboard) to determine which variables (e.g., Interest Rates vs. Oil Prices) have the largest impact on a portfolio's value, allowing for better risk management.
-
-""")
+col1, col2 = st.columns(
